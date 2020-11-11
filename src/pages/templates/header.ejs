@@ -12,6 +12,9 @@
         <a class="nav-link" href="./niveau2">Niveau2</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="./niveau3">Niveau3</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="./niveau4">Niveau4</a>
       </li>
     </ul>
@@ -21,23 +24,29 @@
   <form class="form">
     <label>Page size </label>
     <select id="format">
-      <option value="a0">A0 (slow)</option>
+      <option value="a0">A0 </option>
       <option value="a1">A1</option>
       <option value="a2">A2</option>
       <option value="a3">A3</option>
       <option value="a4" selected>A4</option>
-      <option value="a5">A5 (fast)</option>
+      <option value="a5">A5 </option>
     </select>
     <label>Resolution </label>
     <select id="resolution">
-      <option value="72">72 dpi (fast)</option>
+      <option value="72">72 dpi </option>
       <option value="150">150 dpi</option>
       <option value="300">300 dpi (slow)</option>
     </select>
 
   </form>
-
-    <button id="export-pdf">Export PDF</button>
+  <style>
+    .bouton:hover {
+      background-color: #225222;
+      color: white;
+    }
+    </style>
+    
+    <button id="pdf">PDF</button>
 
 <script> 
 
@@ -47,10 +56,10 @@ var dims = {
     a2: [594, 420],
     a3: [420, 297],
     a4: [297, 210],
-    a5: [210, 148],
-  };
+    a5: [210, 148],};
   
-  var exportButton = document.getElementById('export-pdf');
+    //generer le pdf 
+  var exportButton = document.getElementById('pdf');
   
   exportButton.addEventListener(
     'click',
@@ -102,14 +111,13 @@ var dims = {
           dim[1]
         );
         pdf.save('map.pdf');
-        // Reset original map size
+
         map.setSize(size);
         map.getView().setResolution(viewResolution);
         exportButton.disabled = false;
         document.body.style.cursor = 'auto';
       });
   
-      // Set print size
       var printSize = [width, height];
       map.setSize(printSize);
       var scaling = Math.min(width / size[0], height / size[1]);

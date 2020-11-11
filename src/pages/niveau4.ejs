@@ -3,29 +3,7 @@
 <head>
 
     <%- include('./templates/head'); %>
-    <style>
-          	 #main{
-  position:absolute;
-  width:100%;
-  height:500px;
-  
-}
-#main > div{
-  float:right;
-  margin:10px;
-}
-#d2{
-  width:23%;
-  height:500px;
- 
-}
 
-
-#map {
-        width: 70%;
-        height:500px;
-      }
-    </style>
 </head>
 <body class="container">
 
@@ -48,20 +26,20 @@
 
 
     
-    var lesenrichissement= <%- JSON.stringify(enrichissement) %>;
+    var listesenrichissement= <%- JSON.stringify(enrichissement) %>;
     var features = [];
     
       
-    lesenrichissement.forEach(function(enrich) {
-            var tr =JSON.parse(enrich);
-            var locations = tr['value']['geometry']['coordinates']
-            if(tr['value']['properties']['lvl4_attribute']=="Observation des canards"){
+    listesenrichissement.forEach(function(e) {
+            var t =JSON.parse(e);
+            var locations = t['value']['geometry']['coordinates']
+            if(t['value']['properties']['lvl4_attribute']=="Observation des canards"){
               features.push(new ol.Feature({
                 size:1,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl4_attribute']=="Trouver un restaurant"){
+            if(t['value']['properties']['lvl4_attribute']=="Trouver un restaurant"){
               features.push(new ol.Feature({
                 size:2,
             geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
@@ -69,73 +47,73 @@
 
             }
            
-            if(tr['value']['properties']['lvl4_attribute']=="Pita Pit"){
+            if(t['value']['properties']['lvl4_attribute']=="Pita Pit"){
               features.push(new ol.Feature({
                 size:3,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl4_attribute']=="Retour à l'aquarium"){
+            if(t['value']['properties']['lvl4_attribute']=="Retour à l'aquarium"){
               features.push(new ol.Feature({
                 size:4,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl4_attribute']=="Observation des tags"){
+            if(t['value']['properties']['lvl4_attribute']=="Observation des tags"){
               features.push(new ol.Feature({
                 size:5,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl4_attribute']=="Observation de la marée basse."){
+            if(t['value']['properties']['lvl4_attribute']=="Observation de la marée basse."){
               features.push(new ol.Feature({
                 size:6,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl4_attribute']=="None"){
+            if(t['value']['properties']['lvl4_attribute']=="None"){
               features.push(new ol.Feature({
                 size:7,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl4_attribute']=="Pas envie"){
+            if(t['value']['properties']['lvl4_attribute']=="Pas envie"){
               features.push(new ol.Feature({
                 size:8,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl4_attribute']=="Visite de la maison d'henry II"){
+            if(t['value']['properties']['lvl4_attribute']=="Visite de la maison d'henry II"){
               features.push(new ol.Feature({
                 size:9,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl4_attribute']=="Visite de la cath\u00e9drale"){
+            if(t['value']['properties']['lvl4_attribute']=="Visite de la cath\u00e9drale"){
               features.push(new ol.Feature({
                 size:10,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl4_attribute']=="Raison : Refus \u00e0 l'aquarium"){
+            if(t['value']['properties']['lvl4_attribute']=="Raison : Refus \u00e0 l'aquarium"){
               features.push(new ol.Feature({
                 size:11,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl4_attribute']=="Lecture des panneaux."){
+            if(t['value']['properties']['lvl4_attribute']=="Lecture des panneaux."){
               features.push(new ol.Feature({
                 size:12,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl4_attribute']=="Tentative de visiter la tour St Nicolas"){
+            if(t['value']['properties']['lvl4_attribute']=="Tentative de visiter la tour St Nicolas"){
               features.push(new ol.Feature({
                 size:13,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl4_attribute']=="Traverser la cour du tribunal"){
+            if(t['value']['properties']['lvl4_attribute']=="Traverser la cour du tribunal"){
               features.push(new ol.Feature({
                 size:14,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
@@ -144,7 +122,7 @@
        });
 
     //Affichage des données et leurs couleurs 
-    var styles = {
+    var couches = {
       '1': new ol.style.Style({
         image: new ol.style.Circle({
       radius: 4,
@@ -249,9 +227,9 @@
   }),
 };
     
-    const vectorSource = new ol.source.Vector({features: features,wrapX: false,});
-    var vectorLayer = new ol.layer.Vector({source: vectorSource,style: function (feature) {
-    return styles[feature.get('size')];
+    const vSrc = new ol.source.Vector({features: features,wrapX: false,});
+    var vLayer = new ol.layer.Vector({source: vSrc,style: function (feature) {
+    return couches[feature.get('size')];
   },
       });  
       
@@ -266,11 +244,11 @@
           
         ],
         view: new ol.View({
-          center: ol.proj.fromLonLat([-1.1767,46.1620]),
+            center: ol.proj.fromLonLat([-1.15,46.1667]),
           zoom: 12
         })
       });
-    map.addLayer(vectorLayer);
+    map.addLayer(vLayer);
 
 
 

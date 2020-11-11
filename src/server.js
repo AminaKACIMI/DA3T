@@ -82,12 +82,12 @@ var j=0;
 JS1.on('data',function (obj) {
   liste1.push(JSON.stringify(obj));
     
-    console.log(obj);
+   // console.log(obj);
 
 });
     
 JS1.on('end', () => {
-    console.log('All done');
+    console.log('terminé');
 });
 
 //lecture du fichier geojson

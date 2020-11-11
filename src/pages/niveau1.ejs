@@ -11,15 +11,15 @@
 
 <main>
 
-<script>   var lesenrichissement= <%- JSON.stringify(enrichissement) %>;
+<script>   var listesenrichissement= <%- JSON.stringify(enrichissement) %>;
     const features = [];
     
     
       
-     lesenrichissement.forEach(function(enrich) {
-            var tr =JSON.parse(enrich);
-            var locations = tr['value']['geometry']['coordinates']
-            if(tr['value']['properties']['lvl1_attribute']=="Découverte"){
+    listesenrichissement.forEach(function(e) {
+            var t =JSON.parse(e);
+            var locations = t['value']['geometry']['coordinates']
+            if(t['value']['properties']['lvl1_attribute']=="Découverte"){
               
               features.push(new ol.Feature({
                 size:1,
@@ -27,7 +27,7 @@
             }));
 
             }
-            if(tr['value']['properties']['lvl1_attribute']=="Shopping"){
+            if(t['value']['properties']['lvl1_attribute']=="Shopping"){
               
               features.push(new ol.Feature({
                 size:2,
@@ -36,7 +36,7 @@
 
             }
 
-            if(tr['value']['properties']['lvl1_attribute']=="None"){
+            if(t['value']['properties']['lvl1_attribute']=="None"){
               features.push(new ol.Feature({
                 size:3,
             geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
@@ -47,15 +47,13 @@
             
         
        });
-       var styles = {
+       var couches = {
   '1': new ol.style.Style({
     image: new ol.style.Circle({
       radius: 5,
       fill: new ol.style.Fill({color: 'purple'}),
       
-      
-    }),
-  }),
+       }),}),
   '2': new ol.style.Style({
     image: new ol.style.Circle({
       radius: 5,
@@ -77,16 +75,16 @@
       
        
       
-const vectorSource = new ol.source.Vector({
+const vSrc = new ol.source.Vector({
         features: features,
   wrapX: false,
       });
-      var vectorLayer = new ol.layer.Vector({
+      var vLayer = new ol.layer.Vector({
         
-        source: vectorSource,
+        source: vSrc,
        
         style: function (feature) {
-    return styles[feature.get('size')];
+    return couches[feature.get('size')];
   },
       });  
 
@@ -102,11 +100,11 @@ const vectorSource = new ol.source.Vector({
           
         ],
         view: new ol.View({
-          center: ol.proj.fromLonLat([-1.1767,46.1620]),
+          center: ol.proj.fromLonLat([-1.15,46.1667]),
           zoom: 12
         })
       });
-      map.addLayer(vectorLayer)   
+      map.addLayer(vLayer)   
 
     </script> 
 </main>

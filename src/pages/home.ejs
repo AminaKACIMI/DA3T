@@ -19,8 +19,8 @@
          
             
         listestraces.forEach(function(trace) {
-            var tr =JSON.parse(trace);
-            var locations = tr['value']['location'].split(',');
+            var t =JSON.parse(trace);
+            var locations = t['value']['location'].split(',');
                   
             features.push(new ol.Feature({
             geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[1],locations[0]]))
@@ -30,13 +30,13 @@
         });
           
             
-             const vectorSource = new ol.source.Vector({
+             const vSrc = new ol.source.Vector({
               features
             });
 
         //dessiner les points sur la carte 
-        const vectorLayer = new ol.layer.Vector({
-              source: vectorSource,
+        const vLayer = new ol.layer.Vector({
+              source: vSrc,
               style: new ol.style.Style({
                 image: new ol.style.Circle({
                   radius: 5,
@@ -52,7 +52,7 @@
                 new ol.layer.Tile({
                   source: new ol.source.OSM()
                 }),
-                vectorLayer
+                vLayer
               ],
               view: new ol.View({
                 center: ol.proj.fromLonLat([-1.15,46.1667]),

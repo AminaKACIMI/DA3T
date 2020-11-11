@@ -13,21 +13,21 @@
  <script>
 
 
-var lesenrichissement= <%- JSON.stringify(enrichissement) %>;
+var listesenrichissement= <%- JSON.stringify(enrichissement) %>;
     var features = [];
     
     
       
-     lesenrichissement.forEach(function(enrich) {
-            var tr =JSON.parse(enrich);
-            var locations = tr['value']['geometry']['coordinates']
-            if(tr['value']['properties']['lvl3_attribute']=="Adaption"){
+    listesenrichissement.forEach(function(e) {
+            var t =JSON.parse(e);
+            var locations = t['value']['geometry']['coordinates']
+            if(t['value']['properties']['lvl3_attribute']=="Adaption"){
               features.push(new ol.Feature({
                 size:1,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl3_attribute']=="Information"){
+            if(t['value']['properties']['lvl3_attribute']=="Information"){
               features.push(new ol.Feature({
                 size:2,
             geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
@@ -35,46 +35,44 @@ var lesenrichissement= <%- JSON.stringify(enrichissement) %>;
 
             }
            
-            if(tr['value']['properties']['lvl3_attribute']=="Moment marquant"){
+            if(t['value']['properties']['lvl3_attribute']=="Moment marquant"){
               features.push(new ol.Feature({
                 size:3,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl3_attribute']=="Objectif"){
+            if(t['value']['properties']['lvl3_attribute']=="Objectif"){
               features.push(new ol.Feature({
                 size:4,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl3_attribute']=="Promenade"){
+            if(t['value']['properties']['lvl3_attribute']=="Promenade"){
               features.push(new ol.Feature({
                 size:5,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl3_attribute']=="Restauration"){
+            if(t['value']['properties']['lvl3_attribute']=="Restauration"){
               features.push(new ol.Feature({
                 size:6,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
-            if(tr['value']['properties']['lvl3_attribute']=="None"){
+            if(t['value']['properties']['lvl3_attribute']=="None"){
               features.push(new ol.Feature({
                 size:7,
                 geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
             }));
             }
 
-            
-            
-           
+
             
         
        });
-       var styles = {
-  '1': new ol.style.Style({
-    image: new ol.style.Circle({
+       var couches = {
+            '1': new ol.style.Style({
+            image: new ol.style.Circle({
       radius: 5,
       fill: new ol.style.Fill({color: 'lime'}),
       
@@ -126,16 +124,16 @@ var lesenrichissement= <%- JSON.stringify(enrichissement) %>;
   }),
 };
     
-       const vectorSource = new ol.source.Vector({
+       const vSrc = new ol.source.Vector({
         features: features,
   wrapX: false,
       });
-      var vectorLayer = new ol.layer.Vector({
+      var vLayer = new ol.layer.Vector({
         
-        source: vectorSource,
+        source: vSrc,
        
         style: function (feature) {
-    return styles[feature.get('size')];
+    return couches[feature.get('size')];
   },
       });  
       
@@ -149,11 +147,11 @@ var lesenrichissement= <%- JSON.stringify(enrichissement) %>;
           
         ],
         view: new ol.View({
-          center: ol.proj.fromLonLat([-1.1767,46.1620]),
+          center: ol.proj.fromLonLat([-1.15,46.1667]),
           zoom: 12
         })
       });
-     map.addLayer(vectorLayer);
+     map.addLayer(vLayer);
  </script>
     
 </main>
