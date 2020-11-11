@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <%- include('./templates/head'); %>
+</head>
+<body class="container">
+
+<header>
+    <%- include('./templates/header'); %>
+</header>
+
+<main>
+    <script>var traces = "<%= traces %>";</script>
+
+    <script>
+          
+        var listestraces= <%- JSON.stringify(traces) %>;
+        const features = [];
+         
+            
+        listestraces.forEach(function(trace) {
+            var tr =JSON.parse(trace);
+            var locations = tr['value']['location'].split(',');
+                  
+            features.push(new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[1],locations[0]]))
+            }));
+                  
+              
+        });
+          
+            
+             const vectorSource = new ol.source.Vector({
+              features
+            });
+
+        //dessiner les points sur la carte 
+        const vectorLayer = new ol.layer.Vector({
+              source: vectorSource,
+              style: new ol.style.Style({
+                image: new ol.style.Circle({
+                  radius: 5,
+                  fill: new ol.style.Fill({color: 'black'})
+                })
+              })
+            }); 
+          
+             
+          const map = new ol.Map({
+              target: 'map',
+              layers: [
+                new ol.layer.Tile({
+                  source: new ol.source.OSM()
+                }),
+                vectorLayer
+              ],
+              view: new ol.View({
+                center: ol.proj.fromLonLat([-1.15,46.1667]),
+                zoom: 12
+              })
+            });      
+           
+            
+        </script>
+    
+</main>
+
+<footer>
+    <%- include('./templates/footer'); %>
+</footer>
+
+</body>
+</html>

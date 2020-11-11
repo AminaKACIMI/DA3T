@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+
+    <%- include('./templates/head'); %>
+    <style>
+          	 #main{
+  position:absolute;
+  width:100%;
+  height:500px;
+  
+}
+#main > div{
+  float:right;
+  margin:10px;
+}
+#d2{
+  width:23%;
+  height:500px;
+ 
+}
+
+
+#map {
+        width: 70%;
+        height:500px;
+      }
+    </style>
+</head>
+<body class="container">
+
+<header>
+    <%- include('./templates/header'); %>
+    <div id="main">
+        <div id="d2">
+            <p>Niveau 4</p>
+            <ul style="list-style-type: circle;">
+            <li></li>
+            </ul>
+      
+        </div>
+</header>
+
+<main>
+
+
+ <script>
+
+
+    
+    var lesenrichissement= <%- JSON.stringify(enrichissement) %>;
+    var features = [];
+    
+      
+    lesenrichissement.forEach(function(enrich) {
+            var tr =JSON.parse(enrich);
+            var locations = tr['value']['geometry']['coordinates']
+            if(tr['value']['properties']['lvl4_attribute']=="Observation des canards"){
+              features.push(new ol.Feature({
+                size:1,
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+            }
+            if(tr['value']['properties']['lvl4_attribute']=="Trouver un restaurant"){
+              features.push(new ol.Feature({
+                size:2,
+            geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+
+            }
+           
+            if(tr['value']['properties']['lvl4_attribute']=="Pita Pit"){
+              features.push(new ol.Feature({
+                size:3,
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+            }
+            if(tr['value']['properties']['lvl4_attribute']=="Retour à l'aquarium"){
+              features.push(new ol.Feature({
+                size:4,
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+            }
+            if(tr['value']['properties']['lvl4_attribute']=="Observation des tags"){
+              features.push(new ol.Feature({
+                size:5,
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+            }
+            if(tr['value']['properties']['lvl4_attribute']=="Observation de la marée basse."){
+              features.push(new ol.Feature({
+                size:6,
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+            }
+            if(tr['value']['properties']['lvl4_attribute']=="None"){
+              features.push(new ol.Feature({
+                size:7,
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+            }
+            if(tr['value']['properties']['lvl4_attribute']=="Pas envie"){
+              features.push(new ol.Feature({
+                size:8,
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+            }
+            if(tr['value']['properties']['lvl4_attribute']=="Visite de la maison d'henry II"){
+              features.push(new ol.Feature({
+                size:9,
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+            }
+            if(tr['value']['properties']['lvl4_attribute']=="Visite de la cath\u00e9drale"){
+              features.push(new ol.Feature({
+                size:10,
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+            }
+            if(tr['value']['properties']['lvl4_attribute']=="Raison : Refus \u00e0 l'aquarium"){
+              features.push(new ol.Feature({
+                size:11,
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+            }
+            if(tr['value']['properties']['lvl4_attribute']=="Lecture des panneaux."){
+              features.push(new ol.Feature({
+                size:12,
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+            }
+            if(tr['value']['properties']['lvl4_attribute']=="Tentative de visiter la tour St Nicolas"){
+              features.push(new ol.Feature({
+                size:13,
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+            }
+            if(tr['value']['properties']['lvl4_attribute']=="Traverser la cour du tribunal"){
+              features.push(new ol.Feature({
+                size:14,
+                geometry: new ol.geom.Point(ol.proj.fromLonLat([locations[0],locations[1]])),
+            }));
+            }  
+       });
+
+    //Affichage des données et leurs couleurs 
+    var styles = {
+      '1': new ol.style.Style({
+        image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: 'green'}),
+    }),
+  }),
+    '2': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: '#FF00FF'}),
+    }),
+      }),
+
+
+    '3': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: 'green'}),
+
+     
+    }),
+  }),
+  '4': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: '#C8A951'}),
+     
+    }),
+  }),
+  '5': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: 'purple'}),
+     
+    }),
+  }),
+  '6': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: '#000080'}),
+     
+    }),
+  }),
+  '7': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: 'blue'}),
+     
+    }),
+  }),
+  '8': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: 'yellow'}),
+      
+      
+    }),
+  }),
+  '9': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: '#008080'}),
+     
+    }),
+  }),
+  '10': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: '#00FFFF'}),
+     
+    }),
+  }),
+
+ 
+  '11': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: '#00FF00'}),
+     
+    }),
+  }),
+  '12': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: 'purple'}),
+     
+    }),
+  }),
+  '13': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: '#A52A2A'}),
+     
+    }),
+  }),
+  '14': new ol.style.Style({
+    image: new ol.style.Circle({
+      radius: 4,
+      fill: new ol.style.Fill({color: '#8E4585'}),
+     
+    }),
+  }),
+};
+    
+    const vectorSource = new ol.source.Vector({features: features,wrapX: false,});
+    var vectorLayer = new ol.layer.Vector({source: vectorSource,style: function (feature) {
+    return styles[feature.get('size')];
+  },
+      });  
+      
+       
+
+    const map = new ol.Map({
+        target: 'map',
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM()
+          }),
+          
+        ],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([-1.1767,46.1620]),
+          zoom: 12
+        })
+      });
+    map.addLayer(vectorLayer);
+
+
+
+
+ </script>
+    
+</main>
+
+<footer>
+    <%- include('./templates/footer'); %>
+</footer>
+
+</body>
+
+</html>
